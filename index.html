@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./styles.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mingzat&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Bingo!</title>
+  </head>
+  <body>
+    <h1>BINGO</h1>
+    <input type="button" id="start" value="GO" onclick="startGame()" />
+
+    <p class="subt">YOUR NUMBER IS: <span id="randomNo"></span></p>
+
+    <div class="bingoCont" id="bingoContainer"></div>
+
+    <!-- <input type="button" id="go" value="GO!" hidden="hidden" /> -->
+    <hr />
+
+    <div class="userCont" id="userBoardsContainer"></div>
+  </body>
+  <script>
+    const bingoCont = document.getElementById("bingoContainer");
+    let content1 = 0;
+    for (let i = 0; i < 76; i++) {
+      const newNumbers = document.createElement("div");
+      newNumbers.classList.add("newNumbers");
+      content1 = i + 1;
+      newNumbers.innerText = content1.toString();
+      bingoCont.appendChild(newNumbers);
+    }
+
+    const userCont = document.getElementById("userBoardsContainer");
+    let numbers = [];
+    while (numbers.length < 24) {
+      let r = Math.floor(Math.random() * 76) + 1;
+      if (numbers.indexOf(r) === -1) {
+        numbers.push(r);
+      }
+    }
+    for (let i = 0; i < 24; i++) {
+      const newNumbers = document.createElement("div");
+      newNumbers.classList.add("newNumbers");
+      //   let check = Array();
+      //   check[i] = 0;
+      //   let rand = Math.floor(Math.random() * 77);
+      //   let checker = true;
+
+      //   do {
+      //     for (let v = 0; v < check.length; v++) {
+      //         if (check[v] === rand) {
+      //             checker = false;
+      //         }
+      //     }
+      //     rand = Math.floor(Math.random() * 77);
+      //   } while (checker === false)
+      //   check[i] = rand;
+      newNumbers.innerText = numbers[i].toString();
+      userCont.appendChild(newNumbers);
+    }
+
+    let newNumbers = [];
+    while (newNumbers.length < 24) {
+      let r = Math.floor(Math.random() * 76) + 1;
+      if (newNumbers.indexOf(r) === -1) {
+        newNumbers.push(r);
+      }
+    }
+    let checkInput = Array();
+    let counter = 0;
+    function startGame() {
+      const displayer = document.getElementById("randomNo");
+      const items = document.getElementsByClassName("newNumbers");
+      //   let check = 0;
+
+      for (let i = 0; i < items.length; i++) {
+        items[i].style.backgroundColor = "white";
+      }
+
+      let rand = Math.floor(Math.random() * 76) + 1;
+
+      do {
+        check = true;
+        if (checkInput.indexOf(rand) === -1) {
+          checkInput.push(rand);
+        } else {
+          rand = Math.floor(Math.random() * 76) + 1;
+          check = false;
+        }
+      } while (check === false);
+
+      //   let rand = Math.floor(Math.random() * 77);
+      //   do {
+      //     if (rand === check) {
+      //       rand = Math.floor(Math.random() * 77);
+      //     }
+      //   } while (rand === check);
+      //   check = rand;
+      displayer.innerText = rand.toString();
+
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].innerText === displayer.innerText) {
+          items[i].style.backgroundColor = "green";
+        }
+      }
+      if (checkInput.length === 76) {
+        for (let i = 0; i < checkInput.length; i++) {
+            checkInput[i] = 0;
+        }
+      }
+    }
+  </script>
+</html>
